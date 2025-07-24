@@ -1,33 +1,52 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.http import HttpResponse, HttpResponseNotFound
 
 # Create your views here.
 
-def home(request):
-    text ="""
-    <h1>"Изучаем django"</h1>
-    <strong>Автор</strong>: <i>Иванов И.П.</i>
-    """
-    return HttpResponse(text)
+# def home(request):
+#     text ="""
+#     <h1>"Изучаем django"</h1>
+#     <strong>Автор</strong>: <i>Иванов И.П.</i>
+#     """
+#     return HttpResponse(text)
+
+def home(request) -> HttpResponse:
+    context = {
+        "name": "Иванов Иван Иванович",
+        "email": "mail@mail.ru"
+    }
+    return render(request, "index.html", context)
+"""
+    author = {
+        "Имя": "Иван",
+        "Отчество": "Петрович",
+        "Фамилия": "Иванов",
+        "телефон": "8-923-600-01-02",
+        "email": "vasya@mail.ru",
+    }
+"""
 
 author = {
-    "Имя": "Иван",
-    "Отчество": "Петрович",
-    "Фамилия": "Иванов",
-    "телефон": "8-923-600-01-02",
+    "name": "Иван",
+    "middle_name": "Петрович",
+    "last_name": "Иванов",
+    "phone": "8-923-600-01-02",
     "email": "vasya@mail.ru",
 }
 
 def about(request):
-    text = f"""
-        Имя: {author["Имя"]}<br>
-        Отчество: {author['Отчество']}<br>
-        Фамилия: {author['Фамилия']}<br>
-        телефон: {author['телефон']}<br>
-        email: {author['email']}<br>
-        """
-    return HttpResponse(text)
+    author = {
+        "name": "Иван",
+        "middle_name": "Петрович",
+        "last_name": "Иванов",
+        "phone": "8-923-600-01-02",
+        "email": "vasya@mail.ru",
+    }
+    context = {
+        'author': author
+    }
+    return render(request, "about.html", context)
+
 
 
 items = [
@@ -37,6 +56,7 @@ items = [
    {"id": 7, "name": "Картофель фри" ,"quantity":0},
    {"id": 8, "name": "Кепка" ,"quantity":124},
 ]
+
 
 
 def get_item(request, item_id: int):
@@ -59,3 +79,8 @@ def get_items(request):
         result += f""" <li><a href='/item/{item["id"]}'> {item["name"]} </a></li> """
     result += "</ol>"
     return HttpResponse(result)
+
+
+# Проверка урла
+# def get_item(request, item_id: int):
+#     return HttpResponseNotFound(item_id)
