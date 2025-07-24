@@ -20,6 +20,7 @@ python manage.py migrate
 5. Запустить сервер
 ```
 python manage.py runserver
+fuser -k 8000/tcp
 ```
 
 ## Запуск `ipython` в контексте `django` приложений
