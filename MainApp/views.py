@@ -26,13 +26,13 @@ def home(request) -> HttpResponse:
     }
 """
 
-author = {
-    "name": "Иван",
-    "middle_name": "Петрович",
-    "last_name": "Иванов",
-    "phone": "8-923-600-01-02",
-    "email": "vasya@mail.ru",
-}
+# author = {
+#     "name": "Иван",
+#     "middle_name": "Петрович",
+#     "last_name": "Иванов",
+#     "phone": "8-923-600-01-02",
+#     "email": "vasya@mail.ru",
+# }
 
 def about(request):
     author = {
@@ -58,27 +58,38 @@ items = [
 ]
 
 
-
 def get_item(request, item_id: int):
     """ По указанному id возвращает элемент из списка"""
     for item in items:
         if item["id"] == item_id:
-            result = f"""
-            <h2> Имя: {item["name"]} </h2>
-            <p> Количество: {item["quantity"]} </p>
-            <p> <a href='/items'> Назад к списку товаров </a></p>
-            """
-            return HttpResponse(result)
+            context = {
+                "item": item
+            }
+            return render(request, "item_page.html", context)
+    #return HttpResponseNotFound(f'Item with id={item_id} not found')
+    # return render(request, "error_prod_found.html", {"error": f'Item with id={item_id} not found'})
+    return render(request, "errors.html", {"errors": [f'Item with id={item_id} not found']})
 
-    return HttpResponseNotFound(f'Item with id={item_id} not found')
 
-
+# def get_item(request, item_id: int):
+#     """ По указанному id возвращает элемент из списка"""
+#     for item in items:
+#         if item["id"] == item_id:
+#             result = f"""
+#             <h2> Имя: {item["name"]} </h2>
+#             <p> Количество: {item["quantity"]} </p>
+#             <p> <a href='/items'> Назад к списку товаров </a></p>
+#             """
+        
+#             return HttpResponse(result)
+        
+#     return HttpResponseNotFound(f'Item with id={item_id} not found')   
+        
 def get_items(request):
-    result = "<h1> Список товаров </h1><ol>"
-    for item in items:
-        result += f""" <li><a href='/item/{item["id"]}'> {item["name"]} </a></li> """
-    result += "</ol>"
-    return HttpResponse(result)
+    context = {
+        "items": items 
+        }
+    return render(request, "items_list.html", context)
 
 
 # Проверка урла

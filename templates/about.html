@@ -6,8 +6,13 @@
     <title>About</title>
 </head>
 <body>
+    <head>
+        <a href="/">Home</a> / <a href="/about">About</a> / <a href="/items">Items</a> 
+    </head>
     <h1>Страница автора</h1>
     {# Пример коммента #}
+    {% comment %} Это тоже комментарий {% endcomment %}
+    <!-- Комент который будет виден в отображении разработчика {{ author.email }} -->
         Имя: {{ author.name }}<br>
         Отчество: {{ author.middle_name}}<br>
         Фамилия: {{ author.last_name }}<br>

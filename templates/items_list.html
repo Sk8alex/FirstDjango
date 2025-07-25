@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items list</title>
+</head>
+<body>
+    <header>
+         <a href="/">Home</a> / <a href="/about">About</a> / <a href="/items">Items</a>
+    </header>
+
+    <h1> Список товаров </h1>
+    <ol>
+        {% for item in items %}
+            <li><a href='/item/{{ item.id }}' > {{ item.name }} </a></li>
+        {% endfor %}
+    </ol>
+</body>
